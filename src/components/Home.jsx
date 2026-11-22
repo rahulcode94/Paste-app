@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 import { addTopastes, updateToPastes } from '../redux/pasteSlice'
 
@@ -11,10 +11,16 @@ const Home = () => {
 
     const [searchParams, setSearchParams] = useSearchParams();
 
+    //want to show the paste to edit
+    const allPastes = useSelector((state)=> state.paste.pastes)
+
 
 
     //imp use of redux
     const dispatch = useDispatch()
+
+    const pasteId = searchParams.get("pasteId")
+    console.log(pasteId)
 
 
     function createPaste() {
@@ -48,7 +54,22 @@ const Home = () => {
 
     }
 
-    const pasteId = searchParams.get("pasteId")
+    
+    useEffect(() => {
+        console.log("i am here")
+      if(pasteId){
+        console.log(pasteId)
+        const paste = allPastes.find((p)=> p._id === pasteId)
+        console.log("page found")
+        setTitle(paste.title);
+        setValue(paste.content);
+      }
+    
+     
+    }, [pasteId])
+    
+
+   
     return (
         <div>
             <div className='flex flex-row gap-7 place-content-between'>

@@ -31,7 +31,7 @@ export const pasteSlice = createSlice({
             const paste = action.payload
             // find the paste if exist
             const index  = state.pastes.findIndex((item)=>
-                item._id === paste.id
+                item._id === paste._id
             )
 
             if(index >= 0){
